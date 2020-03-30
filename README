@@ -1,0 +1,44 @@
+!Samuel PP Silveira, Universidade Federal do ABC, 2020
+
+
+Nesta pasta existem programas e macros para gerar jatos chamosos e estranhos e suas respectivas análises.
+
+O programa CSAnalysis recebe como parâmetro o arquivo com a configuração da colisão para o Pythia 8,
+a quantidade de eventos, o RParam dos jatos gerados e o MatchParam para rotulação dos jatos como 
+(anti)charmosos ou estranhos, e.g. ./CSAnalysis ggscbar 100000 0.40 0.05. Os jatos e quarks serão salvos
+no diretório OUTPUT/nEvent_RParam_MatchParam/
+
+Para compilá-lo, é necessário ter o Pythia 8 compilado e configurado. Pode-se utilizar o Makefile e Makefile.inc
+disponível nesta pasta e editar os caminhos onde está instalado o Pythia 8 e Fastjet 3.3.3. Outra forma, que é 
+melhor, é após instalado e linkado Pythia e Fastjet, altere o Makefile (disponível na pasta examples), de modo que,
+na linha onde se encontra:
+
+# FASTJET3.
+main71 main72 main75: $$@.cc $(PREFIX_LIB)/libpythia8.a
+ifeq ($(FASTJET3_USE),true)
+	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
+	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet\
+	  $(GZIP_INC) $(GZIP_FLAGS)
+else
+	@echo "Error: $@ requires FASTJET3"
+endif
+
+para
+
+# FASTJET3.
+main71 main72 main75 CSAnalysis: $$@.cc $(PREFIX_LIB)/libpythia8.a
+ifeq ($(FASTJET3_USE),true)
+	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
+	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet\
+	  $(GZIP_INC) $(GZIP_FLAGS)
+else
+	@echo "Error: $@ requires FASTJET3"
+endif
+
+As macros, por sua vez, são executadas enviando como parâmetro as configurações dos eventos e jatos gerados
+pelo CSAnalysis, e.g. root 'analysisJetsQuarksPt.C("100000_0.4_0.1"), onde 100000 equivale à quantidade de eventos
+gerados, 0.4 é o RParam dos jatos e 0.1 é o MatchParam da rotulação dos jatos. Este arquivo deve estar gerado e 
+disponível na pasta de mesmo nome dentro do diretório OUTPUT/. Sua saída é um arquivo denominado nEvents_RParam_MatchParam_
+results[NOME DA MACRO], disponível em OUTPUT/Histograms Output e contém o(s) histograma(s) gerados na análise.
+
+Evidentemente, é necessário ter o ROOT instalado e configurado nas variáveis de ambiente.
