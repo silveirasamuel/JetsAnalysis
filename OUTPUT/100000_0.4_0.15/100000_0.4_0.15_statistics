@@ -16,6 +16,8 @@ Chisquare/NDF: 13.769
 Parameters: 10051.1,9.08756,8.72078,406.186,69.4988,10.6243
 Parameter Errors: 81.8394,0.188561,0.127157,8.77106,0.269853,0.33839
 Integral: 82848.9
+Interesting Integral: 21136.9
+Interesting Integral Error: 145.385
 Mean: 36.9663
 Maximum X: 7.14472
 Maximum Y: 1815.79
@@ -25,8 +27,9 @@ Statistics of Signal fit
 
 Parameters: 406.186,69.4988,10.6243
 Parameter Errors: 8.77106,0.269853,0.33839
-Integral: 10817.2
-Signal significance: 104.006
+Integral: 10325
+Integral Error: 178.742
+Signal significance: 57.7647
 Mean: 69.4988
 Maximum X: 69.4988
 Maximum Y: 406.186
@@ -37,6 +40,8 @@ Statistics of Background fit
 Parameters: 10051.1,9.08756,8.72078
 Parameter Errors: 81.8394,0.188561,0.127157
 Integral: 72031.7
+Interesting Integral: 10811.9
+Interesting Integral Error: 103.98
 Mean: 32.0808
 Maximum X: 7.14472
 Maximum Y: 1815.79

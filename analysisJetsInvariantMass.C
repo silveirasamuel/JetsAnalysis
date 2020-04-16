@@ -231,9 +231,13 @@ void analysisJetsInvariantMass(string folder){
     c1->SaveAs(("OUTPUT/Histograms Output/"+folder+"_resultsJetsInvariantMass.root").c_str());
     c1->SaveAs(("OUTPUT/Histograms Output/"+folder+"_resultsJetsInvariantMass.pdf").c_str());
 
-   // cout<<"Histogram is built and available in: OUTPUT/Histograms Output/"<<folder<<"_resultsJetsInvariantMass.root"<<endl;
+    
+    double xi,xf;
 
+    xi = sg->GetParameter(1) - 2*sg->GetParameter(2);
+    xf = sg->GetParameter(1) + 2*sg->GetParameter(2);
 
+    
     ofstream statistics;
     statistics.open("OUTPUT/"+folder+"/"+folder+"_statistics");
 
@@ -244,28 +248,42 @@ void analysisJetsInvariantMass(string folder){
     statistics<<"RMS: "<<hJetsInvariantMass->GetRMS()<<endl;
     statistics<<"Mean: "<<hJetsInvariantMass->GetMean()<<endl;
     statistics<<"Integral: "<<hJetsInvariantMass->Integral()<<endl<<endl<<endl;
+
+
     statistics<<"Statistics of Global fit"<<endl<<endl;
+
     statistics<<"Chi square: "<<tf->GetChisquare()<<endl;
     statistics<<"NDF: "<<tf->GetNDF()<<endl;
     statistics<<"Chisquare/NDF: "<<tf->GetChisquare()/tf->GetNDF()<<endl;
     statistics<<"Parameters: "<<tf->GetParameter(0)<<","<<tf->GetParameter(1)<<","<<tf->GetParameter(2)<<","<<tf->GetParameter(3)<<","<<tf->GetParameter(4)<<","<<tf->GetParameter(5)<<endl;
     statistics<<"Parameter Errors: "<<tf->GetParError(0)<<","<<tf->GetParError(1)<<","<<tf->GetParError(2)<<","<<tf->GetParError(3)<<","<<tf->GetParError(4)<<","<<tf->GetParError(5)<<endl;
     statistics<<"Integral: "<<tf->Integral(0,150)<<endl;
+    statistics<<"Interesting Integral: "<<tf->Integral(xi,xf)<<endl;
+    statistics<<"Interesting Integral Error: "<<TMath::Sqrt(tf->Integral(xi,xf))<<endl;
     statistics<<"Mean: "<<tf->Mean(0,150)<<endl;
     statistics<<"Maximum X: "<<tf->GetMaximumX(0,150)<<endl;
     statistics<<"Maximum Y: "<<tf->GetMaximum(0,150)<<endl<<endl<<endl;
+
+
     statistics<<"Statistics of Signal fit"<<endl<<endl;
+
     statistics<<"Parameters: "<<sg->GetParameter(0)<<","<<sg->GetParameter(1)<<","<<sg->GetParameter(2)<<endl;
     statistics<<"Parameter Errors: "<<sg->GetParError(0)<<","<<sg->GetParError(1)<<","<<sg->GetParError(2)<<endl;
-    statistics<<"Integral: "<<sg->Integral(0,150)<<endl;
-    statistics<<"Signal significance: "<<sg->Integral(0,150)/TMath::Sqrt(sg->Integral(0,150))<<endl;
+    statistics<<"Integral: "<<tf->Integral(xi,xf) - bg->Integral(xi,xf)<<endl;
+    statistics<<"Integral Error: "<<TMath::Sqrt(tf->Integral(xi,xf) + bg->Integral(xi,xf))<<endl;
+    statistics<<"Signal significance: "<<(tf->Integral(xi,xf) - bg->Integral(xi,xf))/(TMath::Sqrt(tf->Integral(xi,xf) + bg->Integral(xi,xf)))<<endl;
     statistics<<"Mean: "<<sg->Mean(0,150)<<endl;
     statistics<<"Maximum X: "<<sg->GetMaximumX(0,150)<<endl;
     statistics<<"Maximum Y: "<<sg->GetMaximum(0,150)<<endl<<endl<<endl;
+
+
     statistics<<"Statistics of Background fit"<<endl<<endl;
+
     statistics<<"Parameters: "<<bg->GetParameter(0)<<","<<bg->GetParameter(1)<<","<<bg->GetParameter(2)<<endl;
     statistics<<"Parameter Errors: "<<bg->GetParError(0)<<","<<bg->GetParError(1)<<","<<bg->GetParError(2)<<endl;   
     statistics<<"Integral: "<<bg->Integral(0,150)<<endl;
+    statistics<<"Interesting Integral: "<<bg->Integral(xi,xf)<<endl;
+    statistics<<"Interesting Integral Error: "<<TMath::Sqrt(bg->Integral(xi,xf))<<endl;
     statistics<<"Mean: "<<bg->Mean(0,150)<<endl;
     statistics<<"Maximum X: "<<bg->GetMaximumX(0,150)<<endl;
     statistics<<"Maximum Y: "<<bg->GetMaximum(0,150)<<endl<<endl<<endl;
