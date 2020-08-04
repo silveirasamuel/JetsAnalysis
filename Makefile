@@ -147,7 +147,7 @@ ifeq ($(ROOT_USE),true)
 else
 	@echo "Error: $@ requires ROOT"
 endif
-main92 treewriter_v5: $$@.cc $(PREFIX_LIB)/libpythia8.a main92.so
+main92: $$@.cc $(PREFIX_LIB)/libpythia8.a main92.so
 ifeq ($(ROOT_USE),true)
 	$(CXX) $< main92.so -o $@ -w -I$(ROOT_INCLUDE) $(CXX_COMMON)\
 	 `$(ROOTBIN)root-config --cflags` -Wl,-rpath,./\

@@ -6,21 +6,34 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <sys/stat.h>
+//#include <sys/stat.h>
 
 using namespace std;
 
-void analysisJetsQuarksPt(string folder){
-    ifstream charmianJets("OUTPUT/"+folder+"/"+folder+"_charmianJets.out");
-    ifstream anticharmianJets("OUTPUT/"+folder+"/"+folder+"_anticharmianJets.out");
-    ifstream strangianJets("OUTPUT/"+folder+"/"+folder+"_strangianJets.out");
-    ifstream antistrangianJets("OUTPUT/"+folder+"/"+folder+"_antistrangianJets.out");
+void analysisJetsQuarksPt(int n, double r, double m, int in, int jobs){
+
+    stringstream i;
+    i<<in;
+
+    stringstream folders;
+    folders<<n*jobs<<"_"<<r<<"_"<<m<<"_"<<jobs<<"/";
+    string folder = folders.str();
+    stringstream headers;
+    headers<<n<<"_"<<r<<"_"<<m<<"_"<<in;
+    string header = headers.str();
 
 
-    ifstream charmsParticles("OUTPUT/"+folder+"/"+folder+"_charm.out");
-    ifstream anticharmsParticles("OUTPUT/"+folder+"/"+folder+"_anticharm.out");
-    ifstream strangesParticles("OUTPUT/"+folder+"/"+folder+"_strange.out");
-    ifstream antistrangesParticles("OUTPUT/"+folder+"/"+folder+"_antistrange.out");
+
+    ifstream charmianJets("OUTPUT/"+folder+header+"_charmianJets.out");
+    ifstream anticharmianJets("OUTPUT/"+folder+header+"_anticharmianJets.out");
+    ifstream strangianJets("OUTPUT/"+folder+header+"_strangianJets.out");
+    ifstream antistrangianJets("OUTPUT/"+folder+header+"_antistrangianJets.out");
+
+
+    ifstream charmsParticles("OUTPUT/"+folder+header+"_charm.out");
+    ifstream anticharmsParticles("OUTPUT/"+folder+header+"_anticharm.out");
+    ifstream strangesParticles("OUTPUT/"+folder+header+"_strange.out");
+    ifstream antistrangesParticles("OUTPUT/"+folder+header+"_antistrange.out");
 
    
     vector<MJet*> strangians;
@@ -52,14 +65,14 @@ void analysisJetsQuarksPt(string folder){
     string event, flavor, e, px, py, pz;
     stringstream ss;
    
-    mkdir("OUTPUT/Histograms Output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+  //  mkdir("OUTPUT/Histograms_Output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
-    TFile fout(("OUTPUT/Histograms Output/"+folder+"_resultsJetsQuarksPt.root").c_str(),"recreate");
-    TH2F *hJetsQuarksCharmPt = new TH2F("cjqpt","Charm Jets and Quarks Pt;quarks;jets; counts",300,0,150,300,0,150);
-    TH2F *hJetsQuarksAntiCharmPt = new TH2F("acjqpt","Anticharm Jets and Quarks Pt;quarks;jets; counts",300,0,150,300,0,150);
-    TH2F *hJetsQuarksStrangePt = new TH2F("sjqpt","Strange Jets and Quarks Pt;quarks;jets; counts",300,0,150,300,0,150);
-    TH2F *hJetsQuarksAntiStrangePt = new TH2F("asjqpt","Antistrange Jets and Quarks Pt;quarks;jets; counts",300,0,150,300,0,150);
-    TH2F *hJetsQuarksPt = new TH2F("jqpt","Jets and Quarks Pt;quarks;jets; counts",300,0,150,300,0,150);
+    TFile fout(("OUTPUT/Histograms_Output/"+folder+header+"_resultsJetsQuarksPt.root").c_str(),"recreate");
+    TH2F *hJetsQuarksCharmPt = new TH2F("cjqpt","Charm Jets and Quarks p_{T};quark p_{T};jet p_{T}; counts",300,0,150,300,0,150);
+    TH2F *hJetsQuarksAntiCharmPt = new TH2F("acjqpt","Anticharm Jets and Quarks p_{T};quark p_{T} (GeV/c);jet p_{T} (GeV/c); counts",300,0,150,300,0,150);
+    TH2F *hJetsQuarksStrangePt = new TH2F("sjqpt","Strange Jets and Quarks p_{T};quark p_{T} (GeV/c);jet p_{T} (GeV/c); counts",300,0,150,300,0,150);
+    TH2F *hJetsQuarksAntiStrangePt = new TH2F("asjqpt","Antistrange Jets and Quarks p_{T};quark p_{T} (GeV/c);jet p_{T} (GeV/c); counts",300,0,150,300,0,150);
+    TH2F *hJetsQuarksPt = new TH2F("jqpt","Jets and Quarks p_{T};quark p_{T} (GeV/c);jet p_{T} (GeV/c); counts",300,0,150,300,0,150);
 
 
     if (charmianJets.is_open() && antistrangianJets.is_open() &&anticharmianJets.is_open() && strangianJets.is_open()){
@@ -324,5 +337,5 @@ void analysisJetsQuarksPt(string folder){
     hJetsQuarksAntiStrangePt->Write();
     hJetsQuarksPt->Write();
 
-    cout<<"Histogram is built and available in: OUTPUT/Histograms Output/"<<folder<<"_resultsJetsQuarksPt.root"<<endl;
+    //cout<<"Histogram is built and available in: OUTPUT/Histograms Output/"<<folder<<"_resultsJetsQuarksPt.root"<<endl;
 }

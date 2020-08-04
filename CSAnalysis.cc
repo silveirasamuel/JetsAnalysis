@@ -21,20 +21,35 @@ using namespace Pythia8;
 
 int main (int argc, char* argv[]) {
 
+	if(argc != 7){
+		cout<<"Not enough parameters were passed!"<<endl;
+		return 1;
+	}
+	//Getting input file
 	string inputFile = argv[1];
 	int nEvent = stoi(argv[2],NULL,10);
 
-
+	//Creating Quarks Id Vectors
 	vector<int> charmI;
 	vector<int> anticharmI;
 	vector<int> strangeI;
 	vector<int> antistrangeI;
 
+	//Initializing Pythia
 	Pythia pythia("");
 
 	pythia.readFile(inputFile);
+	int seed = stoi(argv[5],NULL,10);
+	
+	//Using seed passed by parameter
+	stringstream seedString;
+	seedString<<"Random:seed = "<<seed;
+	pythia.readString(seedString.str());
+	
+	
 	pythia.init();
 
+	//Defining Jets Parameters
 	double RParam = stof(argv[3]);
 	Strategy strategy= Best;
 	RecombinationScheme recombScheme = E_scheme;
@@ -46,17 +61,18 @@ int main (int argc, char* argv[]) {
   	ClusterSequence *cs; 
 	vector<PseudoJet> jets;
 
-    /*getting the localtime*/
-    stringstream date, ch, antch, str, antstr;
+	
+    stringstream folder, ch, antch, str, antstr;
 	double deltaPhi = 0;
 	double deltaEta = 0;
 	double MatchParam =  stof(argv[4]);
-    
+    int jobArrays = stoi(argv[6]);
+
 	/*creating directory*/
-    date<<"OUTPUT/"<<nEvent<<"_"<<RParam<<"_"<<MatchParam<<"/";
-    mkdir((date.str()).c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    folder<<"OUTPUT/"<<nEvent*jobArrays<<"_"<<RParam<<"_"<<MatchParam<<"_"<<jobArrays<<"/";
+    mkdir((folder.str()).c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 	stringstream header;
-	header<<date.str()<<nEvent<<"_"<<RParam<<"_"<<MatchParam;
+	header<<folder.str()<<nEvent<<"_"<<RParam<<"_"<<MatchParam<<"_"<<seed;
 
 	ofstream charmianJetsFile (header.str()+"_charmianJets.out");
 	ofstream anticharmianJetsFile (header.str()+"_anticharmianJets.out");
@@ -105,12 +121,12 @@ int main (int argc, char* argv[]) {
 	    jets = sorted_by_pt(cs->inclusive_jets());
 
 	    // print out some infos
-	    cout << "Clustering with " << jetDef->description() << endl;
+//	    cout << "Clustering with " << jetDef->description() << endl;
 
 
 	    for(unsigned k = 0;k < jets.size();k++){
 	    	for(unsigned j = 0; j < charmI.size();j++){
-	    		deltaEta = jets[k].rap() - pythia.event[charmI[j]].eta();
+	    		deltaEta = jets[k].eta() - pythia.event[charmI[j]].eta();
 	    		deltaPhi = jets[k].phi() - pythia.event[charmI[j]].phi();
 	    		if(sqrt((pow(deltaEta,2) + pow(deltaPhi,2)))<MatchParam){
 					charmianJetsFile<<iEvent<<";"<<CHARM<<";"<<jets[k].E()<<";"<<jets[k].px()<<";"<<jets[k].py()<<";"<<jets[k].pz()<<endl;	
@@ -121,7 +137,7 @@ int main (int argc, char* argv[]) {
 	    	}
 
 			for(unsigned j = 0; j < anticharmI.size();j++){
-	    		deltaEta = jets[k].rap() - pythia.event[anticharmI[j]].eta();
+	    		deltaEta = jets[k].eta() - pythia.event[anticharmI[j]].eta();
 	    		deltaPhi = jets[k].phi() - pythia.event[anticharmI[j]].phi();
 	    		if(sqrt((pow(deltaEta,2) + pow(deltaPhi,2)))<MatchParam){
 					anticharmianJetsFile<<iEvent<<";"<<CHARM<<";"<<jets[k].E()<<";"<<jets[k].px()<<";"<<jets[k].py()<<";"<<jets[k].pz()<<endl;	
@@ -132,7 +148,7 @@ int main (int argc, char* argv[]) {
 	    	}
 
 			for(unsigned j = 0; j < strangeI.size();j++){
-	    		deltaEta = jets[k].rap() - pythia.event[strangeI[j]].eta();
+	    		deltaEta = jets[k].eta() - pythia.event[strangeI[j]].eta();
 	    		deltaPhi = jets[k].phi() - pythia.event[strangeI[j]].phi();
 	    		if(sqrt((pow(deltaEta,2) + pow(deltaPhi,2)))<MatchParam){
 					strangianJetsFile<<iEvent<<";"<<CHARM<<";"<<jets[k].E()<<";"<<jets[k].px()<<";"<<jets[k].py()<<";"<<jets[k].pz()<<endl;	
@@ -143,7 +159,7 @@ int main (int argc, char* argv[]) {
 	    	}
 
 			for(unsigned j = 0; j < antistrangeI.size();j++){
-	    		deltaEta = jets[k].rap() - pythia.event[antistrangeI[j]].eta();
+	    		deltaEta = jets[k].eta() - pythia.event[antistrangeI[j]].eta();
 	    		deltaPhi = jets[k].phi() - pythia.event[antistrangeI[j]].phi();
 	    		if(sqrt((pow(deltaEta,2) + pow(deltaPhi,2)))<MatchParam){
 					antistrangianJetsFile<<iEvent<<";"<<CHARM<<";"<<jets[k].E()<<";"<<jets[k].px()<<";"<<jets[k].py()<<";"<<jets[k].pz()<<endl;	
@@ -159,12 +175,12 @@ int main (int argc, char* argv[]) {
 		charmI.clear();
 		anticharmI.clear();
 	    // print the jets
-	    cout <<   "        pt y phi" << endl;
+/*	    cout <<   "        pt y phi" << endl;
 	    for (unsigned l = 0; l < jets.size(); l++) {
 	      cout << "jet " << l << ": "<< jets[l].pt() << " " 
 	                    << jets[l].rap() << " " << jets[l].phi() << endl;
 	    }
-
+*/
 	    fjInputs.clear();
 		jets.clear();
 		delete cs;

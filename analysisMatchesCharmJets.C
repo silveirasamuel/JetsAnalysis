@@ -6,21 +6,34 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <sys/stat.h>
+//#include <sys/stat.h>
 
 using namespace std;
 
-void analysisMatchesCharmJets(string folder){
-    ifstream charmianJets("OUTPUT/"+folder+"/"+folder+"_charmianJets.out");
-    ifstream anticharmianJets("OUTPUT/"+folder+"/"+folder+"_anticharmianJets.out");
-    ifstream strangianJets("OUTPUT/"+folder+"/"+folder+"_strangianJets.out");
-    ifstream antistrangianJets("OUTPUT/"+folder+"/"+folder+"_antistrangianJets.out");
+void analysisMatchesCharmJets(int n, double r, double m, int in, int jobs){
 
 
-    ifstream charmsParticles("OUTPUT/"+folder+"/"+folder+"_charm.out");
-    ifstream anticharmsParticles("OUTPUT/"+folder+"/"+folder+"_anticharm.out");
-    ifstream strangesParticles("OUTPUT/"+folder+"/"+folder+"_strange.out");
-    ifstream antistrangesParticles("OUTPUT/"+folder+"/"+folder+"_antistrange.out");
+    stringstream i;
+    i<<in;
+
+    stringstream folders;
+    folders<<n*jobs<<"_"<<r<<"_"<<m<<"_"<<jobs<<"/";
+    string folder = folders.str();
+    stringstream headers;
+    headers<<n<<"_"<<r<<"_"<<m<<"_"<<in;
+    string header = headers.str();
+
+    
+    ifstream charmianJets("OUTPUT/"+folder+header+"_charmianJets.out");
+    ifstream anticharmianJets("OUTPUT/"+folder+header+"_anticharmianJets.out");
+    ifstream strangianJets("OUTPUT/"+folder+header+"_strangianJets.out");
+    ifstream antistrangianJets("OUTPUT/"+folder+header+"_antistrangianJets.out");
+
+
+    ifstream charmsParticles("OUTPUT/"+folder+header+"_charm.out");
+    ifstream anticharmsParticles("OUTPUT/"+folder+header+"_anticharm.out");
+    ifstream strangesParticles("OUTPUT/"+folder+header+"_strange.out");
+    ifstream antistrangesParticles("OUTPUT/"+folder+header+"_antistrange.out");
 
    
     vector<MJet*> strangians;
@@ -52,25 +65,25 @@ void analysisMatchesCharmJets(string folder){
     string event, flavor, e, px, py, pz;
     stringstream ss;
    
-    mkdir("OUTPUT/Histograms Output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+  //  mkdir("OUTPUT/Histograms_Output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
-    TFile fout(("OUTPUT/Histograms Output/"+folder+"_resultsMatchesCharmJets.root").c_str(),"recreate");
+    TFile fout(("OUTPUT/Histograms_Output/"+folder+header+"_resultsMatchesCharmJets.root").c_str(),"recreate");
 
 
-    TH1F *hCharmQuarkPromiscuity = new TH1F("cqp","Charm Quarks Matches;charm jet matches; counts",15,1,1);
-    TH1F *hCharmJetPromiscuity = new TH1F("cjp","Charm Jets Matches;charm matches; counts",15,1,1);
+    TH1F *hCharmQuarkPromiscuity = new TH1F("cqp","Charm Quark Matches;charm jet matches; counts",15,1,1);
+    TH1F *hCharmJetPromiscuity = new TH1F("cjp","Charm Jet Matches;charm matches; counts",15,1,1);
 
-    TH1F *hAntiCharmQuarkPromiscuity = new TH1F("acqp","AntiCharm Quarks Matches;anticharm jet matches; counts",15,1,1);
-    TH1F *hAntiCharmJetPromiscuity = new TH1F("acjp","AntiCharm Jets Matches;anticharm matches; counts",15,1,1);
+    TH1F *hAntiCharmQuarkPromiscuity = new TH1F("acqp","AntiCharm Quark Matches;anticharm jet matches; counts",15,1,1);
+    TH1F *hAntiCharmJetPromiscuity = new TH1F("acjp","AntiCharm Jet Matches;anticharm matches; counts",15,1,1);
 
-    TH1F *hStrangeQuarkPromiscuity = new TH1F("sqp","Strange Quarks Matches;strange jet matches; counts",15,1,1);
-    TH1F *hStrangeJetPromiscuity = new TH1F("sjp","Strange Jets Matches;strange matches; counts",15,1,1);
+    TH1F *hStrangeQuarkPromiscuity = new TH1F("sqp","Strange Quark Matches;strange jet matches; counts",15,1,1);
+    TH1F *hStrangeJetPromiscuity = new TH1F("sjp","Strange Jet Matches;strange matches; counts",15,1,1);
 
-    TH1F *hAntiStrangeQuarkPromiscuity = new TH1F("asqp","AntiStrange Quarks Matches;antistrange jet matches; counts",15,1,1);
-    TH1F *hAntiStrangeJetPromiscuity = new TH1F("asjp","AntiStrange Jets Matches;antistrange matches; counts",15,1,1);
+    TH1F *hAntiStrangeQuarkPromiscuity = new TH1F("asqp","AntiStrange Quark Matches;antistrange jet matches; counts",15,1,1);
+    TH1F *hAntiStrangeJetPromiscuity = new TH1F("asjp","AntiStrange Jet Matches;antistrange matches; counts",15,1,1);
 
-    TH1F *hQuarkPromiscuity = new TH1F("qp","Quarks Matches;jet matches;counts",15,1,1);
-    TH1F *hJetPromiscuity = new TH1F("jp","Jets Matches; quark matches; counts",15,1,1);
+    TH1F *hQuarkPromiscuity = new TH1F("qp","Quark Matches;jet matches;counts",15,1,1);
+    TH1F *hJetPromiscuity = new TH1F("jp","Jet Matches; quark matches; counts",15,1,1);
 
    
     if (charmianJets.is_open() && antistrangianJets.is_open() &&anticharmianJets.is_open() && strangianJets.is_open()){
@@ -434,5 +447,5 @@ void analysisMatchesCharmJets(string folder){
     hQuarkPromiscuity->Write();
     hJetPromiscuity->Write();
 
-    cout<<"Histogram is built and available in: OUTPUT/Histograms Output/"<<folder<<"_resultsMatchesCharmJets.root"<<endl;
+   // cout<<"Histogram is built and available in: OUTPUT/Histograms Output/"<<folder<<"_resultsMatchesCharmJets.root"<<endl;
 }

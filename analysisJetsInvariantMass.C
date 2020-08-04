@@ -1,28 +1,40 @@
 //Samuel P P Silveira, Universidade Federal do ABC, 2020
 #include "MJet.h"
 #include "TLorentzVector.h"
+//#include <sys/stat.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <sys/stat.h>
+
 
 using namespace std;
 
-void analysisJetsInvariantMass(string folder){
+void analysisJetsInvariantMass(int n, double r, double m, int in, int jobs){
 
-    auto c1 = new TCanvas("c1","c1",1000,550);
-    gStyle->SetOptStat("");
+    stringstream i;
+    i<<in;
 
-    gPad->SetGridy();
-    gPad->SetTickx();
-    gPad->SetTicky();
+    //auto c1 = new TCanvas("c1","c1",1000,550);
+    //gStyle->SetOptStat("");
 
-    ifstream charmianJets("OUTPUT/"+folder+"/"+folder+"_charmianJets.out");
-    ifstream anticharmianJets("OUTPUT/"+folder+"/"+folder+"_anticharmianJets.out");
-    ifstream strangianJets("OUTPUT/"+folder+"/"+folder+"_strangianJets.out");
-    ifstream antistrangianJets("OUTPUT/"+folder+"/"+folder+"_antistrangianJets.out");
+    //gPad->SetGridy();
+    //gPad->SetTickx();
+    //gPad->SetTicky();
+    
+    stringstream folders;
+    folders<<n*jobs<<"_"<<r<<"_"<<m<<"_"<<jobs<<"/";
+    string folder = folders.str();
+    stringstream headers;
+    headers<<n<<"_"<<r<<"_"<<m<<"_"<<in;
+    string header = headers.str();
+
+
+    ifstream charmianJets("OUTPUT/"+folder+header+"_charmianJets.out");
+    ifstream anticharmianJets("OUTPUT/"+folder+header+"_anticharmianJets.out");
+    ifstream strangianJets("OUTPUT/"+folder+header+"_strangianJets.out");
+    ifstream antistrangianJets("OUTPUT/"+folder+header+"_antistrangianJets.out");
 
    
     vector<MJet*> strangians;
@@ -42,9 +54,9 @@ void analysisJetsInvariantMass(string folder){
     string event, flavor, e, px, py, pz;
     stringstream ss;
    
-    mkdir("OUTPUT/Histograms Output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+//    mkdir("OUTPUT/Histograms_Output", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
-    TFile fout(("OUTPUT/Histograms Output/"+folder+"_resultsJetsInvariantMass.root").c_str(),"recreate");
+    TFile fout(("OUTPUT/Histograms_Output/"+folder+header+"_hresultsJetsInvariantMass.root").c_str(),"recreate");
     TH1F *hJetsInvariantMass = new TH1F("wjim","W Jets Invariant Mass;m_{W} [GeV c^{-2}]; counts",200,0,150);
 
 
@@ -153,7 +165,7 @@ void analysisJetsInvariantMass(string folder){
                 wBoson->flavor = 24;
                 wBoson->lv = charmians[i]->lv + antistrangians[j]->lv;
                 hJetsInvariantMass->Fill(wBoson->lv.M());
-                //cout<<wBoson->event<<","<<wBoson->flavor<<","<<wBoson->lv.Px()<<","<<wBoson->lv.Py()<<","<<wBoson->lv.Pz()<<","<<wBoson->lv.E()<<endl;
+               
             }
             if(antistrangians[j]->event > charmians[i]->event){
                 pointer=j;
@@ -192,17 +204,23 @@ void analysisJetsInvariantMass(string folder){
     hJetsInvariantMass->Sumw2();
     hJetsInvariantMass->SetLineColor(4);
 
-    TF1 *tf = new TF1("tf","landau(0) + gaus(3)",0,150);
-    tf->SetParameters(600,20,11,250,75,5);
+    /*TF1 *tf = new TF1("tf","landau(0) + gaus(3) + gaus(6)",0,150);
+    tf->SetParameters(600,20,11,700,50,2,800,75,5);
     tf->SetLineColor(6);
     hJetsInvariantMass->Fit(tf,"R");
     hJetsInvariantMass->Draw("e1");
 
     TF1 *sg = new TF1("sg","gaus(0)",0,150);
-    sg->SetParameters(tf->GetParameters()+3);
-    sg->SetParErrors(tf->GetParErrors()+3);
+    sg->SetParameters(tf->GetParameters()+6);
+    sg->SetParErrors(tf->GetParErrors()+6);
     sg->SetLineColor(3);
     sg->DrawClone("same");
+
+    TF1 *sg2 = new TF1("sg2","gaus(0)",0,150);
+    sg2->SetParameters(tf->GetParameters()+3);
+    sg2->SetParErrors(tf->GetParErrors()+3);
+    sg2->SetLineColor(15);
+    sg2->DrawClone("same");
 
 
     TF1 *bg = new TF1("bg","landau(0)",0,150);
@@ -221,25 +239,32 @@ void analysisJetsInvariantMass(string folder){
     legend->SetTextSize(0.02);
     legend->SetHeader("Legend","C");
     legend->AddEntry(sg,"Signal fit","l");
+    legend->AddEntry(sg2,"Secondary Signal fit","l");
     legend->AddEntry(bg,"Background fit","l");
     legend->AddEntry(tf,"Global fit","l");
-    legend->DrawClone();
+    legend->DrawClone();*/
     
    
-    c1->DrawClone();
+    //c1->DrawClone();
 
-    c1->SaveAs(("OUTPUT/Histograms Output/"+folder+"_resultsJetsInvariantMass.root").c_str());
-    c1->SaveAs(("OUTPUT/Histograms Output/"+folder+"_resultsJetsInvariantMass.pdf").c_str());
-
+    //c1->SaveAs(("OUTPUT/Histograms Output/"+folder+"_"+i.str()+"_resultsJetsInvariantMass.root").c_str());
+    //c1->SaveAs(("OUTPUT/Histograms Output/"+folder+"_"+i.str()+"_resultsJetsInvariantMass.pdf").c_str());
+    hJetsInvariantMass->Write();
     
-    double xi,xf;
+    /*double xi,xf,x2i,x2f;
 
     xi = sg->GetParameter(1) - 2*sg->GetParameter(2);
     xf = sg->GetParameter(1) + 2*sg->GetParameter(2);
 
+    x2i = sg2->GetParameter(1) - 2*sg2->GetParameter(2);
+    x2f = sg2->GetParameter(1) + 2*sg2->GetParameter(2);
+
+    cout<<"x2i: "<<x2i<<" x2f: " <<x2f<<endl;
+    
+
     
     ofstream statistics;
-    statistics.open("OUTPUT/"+folder+"/"+folder+"_statistics");
+    statistics.open("OUTPUT/"+folder+"/"+folder+"_"+i+"_statistics");
 
     statistics<<"Statistics of histogram"<<endl<<endl;
     statistics<<"Entries: "<<hJetsInvariantMass->GetEntries()<<endl;
@@ -255,8 +280,8 @@ void analysisJetsInvariantMass(string folder){
     statistics<<"Chi square: "<<tf->GetChisquare()<<endl;
     statistics<<"NDF: "<<tf->GetNDF()<<endl;
     statistics<<"Chisquare/NDF: "<<tf->GetChisquare()/tf->GetNDF()<<endl;
-    statistics<<"Parameters: "<<tf->GetParameter(0)<<","<<tf->GetParameter(1)<<","<<tf->GetParameter(2)<<","<<tf->GetParameter(3)<<","<<tf->GetParameter(4)<<","<<tf->GetParameter(5)<<endl;
-    statistics<<"Parameter Errors: "<<tf->GetParError(0)<<","<<tf->GetParError(1)<<","<<tf->GetParError(2)<<","<<tf->GetParError(3)<<","<<tf->GetParError(4)<<","<<tf->GetParError(5)<<endl;
+    statistics<<"Parameters: "<<tf->GetParameter(0)<<","<<tf->GetParameter(1)<<","<<tf->GetParameter(2)<<","<<tf->GetParameter(3)<<","<<tf->GetParameter(4)<<","<<tf->GetParameter(5)<<","<<tf->GetParameter(6)<<","<<tf->GetParameter(7)<<","<<tf->GetParameter(8)<<endl;
+    statistics<<"Parameter Errors: "<<tf->GetParError(0)<<","<<tf->GetParError(1)<<","<<tf->GetParError(2)<<","<<tf->GetParError(3)<<","<<tf->GetParError(4)<<","<<tf->GetParError(5)<<tf->GetParError(6)<<","<<tf->GetParError(7)<<","<<tf->GetParError(8)<<endl;
     statistics<<"Integral: "<<tf->Integral(0,150)<<endl;
     statistics<<"Interesting Integral: "<<tf->Integral(xi,xf)<<endl;
     statistics<<"Interesting Integral Error: "<<TMath::Sqrt(tf->Integral(xi,xf))<<endl;
@@ -276,6 +301,17 @@ void analysisJetsInvariantMass(string folder){
     statistics<<"Maximum X: "<<sg->GetMaximumX(0,150)<<endl;
     statistics<<"Maximum Y: "<<sg->GetMaximum(0,150)<<endl<<endl<<endl;
 
+    statistics<<"Statistics of Secondary Signal fit"<<endl<<endl;
+
+    statistics<<"Parameters: "<<sg2->GetParameter(0)<<","<<sg2->GetParameter(1)<<","<<sg2->GetParameter(2)<<endl;
+    statistics<<"Parameter Errors: "<<sg2->GetParError(0)<<","<<sg2->GetParError(1)<<","<<sg2->GetParError(2)<<endl;
+    statistics<<"Integral: "<<tf->Integral(x2f,x2i) - bg->Integral(x2f,x2i)<<endl;
+    statistics<<"Integral Error: "<<tf->Integral(x2f,x2i) + bg->Integral(x2f,x2i)<<endl;
+    statistics<<"Signal significance: "<<(tf->Integral(x2f,x2i) - bg->Integral(x2f,x2i))/(TMath::Sqrt(tf->Integral(x2f,x2i) + bg->Integral(x2f,x2i)))<<endl;
+    statistics<<"Mean: "<<sg2->Mean(0,150)<<endl;
+    statistics<<"Maximum X: "<<sg2->GetMaximumX(0,150)<<endl;
+    statistics<<"Maximum Y: "<<sg2->GetMaximum(0,150)<<endl<<endl<<endl;
+
 
     statistics<<"Statistics of Background fit"<<endl<<endl;
 
@@ -288,6 +324,6 @@ void analysisJetsInvariantMass(string folder){
     statistics<<"Maximum X: "<<bg->GetMaximumX(0,150)<<endl;
     statistics<<"Maximum Y: "<<bg->GetMaximum(0,150)<<endl<<endl<<endl;
 
-    statistics.close();
+    statistics.close();*/
 
 }
