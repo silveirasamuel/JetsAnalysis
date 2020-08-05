@@ -16,12 +16,12 @@ void analysisJetsInvariantMass(int n, double r, double m, int in, int jobs){
     stringstream i;
     i<<in;
 
-    //auto c1 = new TCanvas("c1","c1",1000,550);
-    //gStyle->SetOptStat("");
+    auto c1 = new TCanvas("c1","c1",1000,550);
+    gStyle->SetOptStat("");
 
-    //gPad->SetGridy();
-    //gPad->SetTickx();
-    //gPad->SetTicky();
+    gPad->SetGridy();
+    gPad->SetTickx();
+    gPad->SetTicky();
     
     stringstream folders;
     folders<<n*jobs<<"_"<<r<<"_"<<m<<"_"<<jobs<<"/";
