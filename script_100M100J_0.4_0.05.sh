@@ -5,6 +5,8 @@
 #SBATCH --array=1-100
 #SBATCH --output=output_1M100J_0.4_0.05_%a.out
 #SBATCH --error=errors_1M100J_0.4_0.05_%a.err
+#SBATCH --mail-user=samuel.silveira@aluno.ufabc.edu.br
+#SBATCH --mail-type=ALL
 
 module add gnu8/8.3.0
 module load gnu8/8.3.0
@@ -15,7 +17,7 @@ echo -e "\n## Job iniciado em $(date +'%d-%m-%Y as %T') ###################"
 cd $SLURM_SUBMIT_DIR
 echo -e "\n## Diretorio de submissao do job: $SLURM_SUBMIT_DIR \n"
 
-srun ./CSAnalysis ggscbar 1000000 0.4 0.05 $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_MAX
+#srun ./CSAnalysis ggscbar 1000000 0.4 0.05 $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_MAX
 
 cd OUTPUT/Histograms_Output/
 mkdir -p 100000000_0.4_0.05_100
