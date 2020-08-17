@@ -1,0 +1,20 @@
+Warning in <TFile::Init>: file 1000000_0.4_0.1_14_hresultsJetsInvariantMass.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_19_hresultsJetsInvariantMass.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_21_hresultsJetsInvariantMass.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_33_hresultsJetsInvariantMass.root has no keys
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 1000000_0.4_0.1_39_hresultsJetsInvariantMass.root, got 63 of 300
+Error in <TFile::Init>: 1000000_0.4_0.1_39_hresultsJetsInvariantMass.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 1000000_0.4_0.1_39_hresultsJetsInvariantMass.root
+hadd exiting due to error in 1000000_0.4_0.1_39_hresultsJetsInvariantMass.root
+Warning in <TFile::Init>: file 1000000_0.4_0.1_5_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_6_resultsMatchesCharmJets.root has no keys
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.1_MatchesJets.root, got 254 of 300
+Error in <TFile::Init>: 100M_0.4_0.1_MatchesJets.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.1_MatchesJets.root
+hadd exiting due to error in 100M_0.4_0.1_MatchesJets.root
+Warning in <TFile::Init>: file 1000000_0.4_0.1_2_resultsJetsQuarksPt.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_7_resultsJetsQuarksPt.root has no keys
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.1_JetsQuarksPt.root, got 256 of 300
+Error in <TFile::Init>: 100M_0.4_0.1_JetsQuarksPt.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.1_JetsQuarksPt.root
+hadd exiting due to error in 100M_0.4_0.1_JetsQuarksPt.root

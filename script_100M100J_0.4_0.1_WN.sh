@@ -24,9 +24,9 @@ cd OUTPUT_WN/Histograms_Output/
 mkdir -p 100000000_0.4_0.1_100
 cd ../../
 
-srun root.exe -q "analysisJetsInvariantMass.C(1000000,0.4,0.1,$SLURM_ARRAY_TASK_ID,$SLURM_ARRAY_TASK_MAX)"
-srun root.exe -q "analysisJetsQuarksPt.C(1000000,0.4,0.1,$SLURM_ARRAY_TASK_ID,$SLURM_ARRAY_TASK_MAX)"
-srun root.exe -q "analysisMatchesCharmJets.C(1000000,0.4,0.1,$SLURM_ARRAY_TASK_ID,$SLURM_ARRAY_TASK_MAX)"
+srun root.exe -q "analysisJetsInvariantMass_WN.C(1000000,0.4,0.1,$SLURM_ARRAY_TASK_ID,$SLURM_ARRAY_TASK_MAX)"
+srun root.exe -q "analysisJetsQuarksPt_WN.C(1000000,0.4,0.1,$SLURM_ARRAY_TASK_ID,$SLURM_ARRAY_TASK_MAX)"
+srun root.exe -q "analysisMatchesCharmJets_WN.C(1000000,0.4,0.1,$SLURM_ARRAY_TASK_ID,$SLURM_ARRAY_TASK_MAX)"
 srun root.exe -q "analysisNeutrinos.C(1000000,0.4,0.1,$SLURM_ARRAY_TASK_ID,$SLURM_ARRAY_TASK_MAX)"
 
 
@@ -38,6 +38,7 @@ cd OUTPUT_WN/Histograms_Output/100000000_0.4_0.1_100
 hadd -f 100M_0.4_0.1_JetsInvariantMass.root *JetsInvariantMass.root
 hadd -f 100M_0.4_0.1_MatchesJets.root *Jets.root
 hadd -f 100M_0.4_0.1_JetsQuarksPt.root *JetsQuarksPt.root
+hadd -f 100M_0.4_0.1_JetsNeutrinos.root *hresultsNeutrinos.root
 
 echo -e "\n## Job finalizado em $(date +'%d-%m-%Y as %T') ###################"
            

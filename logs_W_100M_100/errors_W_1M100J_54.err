@@ -1,0 +1,4 @@
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 1000000_70_hresultsWInvariantMass.root, got 63 of 300
+Error in <TFile::Init>: 1000000_70_hresultsWInvariantMass.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 1000000_70_hresultsWInvariantMass.root
+hadd exiting due to error in 1000000_70_hresultsWInvariantMass.root

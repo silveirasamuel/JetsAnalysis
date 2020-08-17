@@ -1,0 +1,24 @@
+Warning in <TFile::Init>: file 1000000_0.4_0.1_41_hresultsJetsInvariantMass.root has no keys
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.1_JetsInvariantMass.root, got 266 of 300
+Error in <TFile::Init>: 100M_0.4_0.1_JetsInvariantMass.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.1_JetsInvariantMass.root
+hadd exiting due to error in 100M_0.4_0.1_JetsInvariantMass.root
+Warning in <TFile::Init>: file 1000000_0.4_0.1_13_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_17_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_20_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_23_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_24_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_30_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_44_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_45_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_47_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_48_resultsMatchesCharmJets.root has no keys
+Warning in <TFile::Init>: file 1000000_0.4_0.1_57_resultsMatchesCharmJets.root has no keys
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.1_MatchesJets.root, got 254 of 300
+Error in <TFile::Init>: 100M_0.4_0.1_MatchesJets.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.1_MatchesJets.root
+hadd exiting due to error in 100M_0.4_0.1_MatchesJets.root
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.1_JetsQuarksPt.root, got 256 of 300
+Error in <TFile::Init>: 100M_0.4_0.1_JetsQuarksPt.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.1_JetsQuarksPt.root
+hadd exiting due to error in 100M_0.4_0.1_JetsQuarksPt.root

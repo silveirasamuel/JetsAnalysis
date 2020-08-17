@@ -1,0 +1,24 @@
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.15_JetsInvariantMass.root, got 268 of 300
+Error in <TFile::Init>: 100M_0.4_0.15_JetsInvariantMass.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.15_JetsInvariantMass.root
+hadd exiting due to error in 100M_0.4_0.15_JetsInvariantMass.root
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.15_MatchesJets.root, got 256 of 300
+Error in <TFile::Init>: 100M_0.4_0.15_MatchesJets.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.15_MatchesJets.root
+hadd exiting due to error in 100M_0.4_0.15_MatchesJets.root
+Error in <TFile::ReadBuffer>: error reading all requested bytes from file 100M_0.4_0.15_JetsQuarksPt.root, got 258 of 300
+Error in <TFile::Init>: 100M_0.4_0.15_JetsQuarksPt.root failed to read the file type data.
+Error in <TFileMerger::AddFile>: cannot open file 100M_0.4_0.15_JetsQuarksPt.root
+hadd exiting due to error in 100M_0.4_0.15_JetsQuarksPt.root
+Error in <Merge>: Cannot merge histograms - limits are inconsistent:
+ first: ne (200, 0.000000, 4250.000000), second: ne (200, 0.000000, 5100.000000)
+Error in <TFileMerger::MergeRecursive>: calling Merge() on 'ne' with the corresponding object in '1000000_0.4_0.15_2_hresultsNeutrinos.root'
+Error in <Merge>: Cannot merge histograms - limits are inconsistent:
+ first: ne (200, 0.000000, 4250.000000), second: ne (200, 0.000000, 4300.000000)
+Error in <TFileMerger::MergeRecursive>: calling Merge() on 'ne' with the corresponding object in '1000000_0.4_0.15_4_hresultsNeutrinos.root'
+Error in <Merge>: Cannot merge histograms - limits are inconsistent:
+ first: npt (200, 0.000000, 123.000000), second: npt (200, 0.000000, 119.000000)
+Error in <TFileMerger::MergeRecursive>: calling Merge() on 'npt' with the corresponding object in '1000000_0.4_0.15_2_hresultsNeutrinos.root'
+Error in <Merge>: Cannot merge histograms - limits are inconsistent:
+ first: npt (200, 0.000000, 123.000000), second: npt (200, 0.000000, 144.000000)
+Error in <TFileMerger::MergeRecursive>: calling Merge() on 'npt' with the corresponding object in '1000000_0.4_0.15_4_hresultsNeutrinos.root'
