@@ -1,10 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name=CSJets_100M100J_0.4_0.15
+#SBATCH -p serial
 #SBATCH --time=3-00:00:00
 #SBATCH --ntasks=1
 #SBATCH --array=1-100
 #SBATCH --output=output_1M100J_0.4_0.15_%a.out
 #SBATCH --error=errors_1M100J_0.4_0.15_%a.err
+#SBATCH --mail-user=samuel.silveira@aluno.ufabc.edu.br
+#SBATCH --mail-type=ALL
 
 module add gnu8/8.3.0
 module load gnu8/8.3.0
@@ -28,6 +31,11 @@ srun root.exe -q "analysisMatchesCharmJets.C(1000000,0.4,0.15,$SLURM_ARRAY_TASK_
 mkdir -p logs_100M_0.4_0.15_100
 mv output_1M100J_0.4_0.15_$SLURM_ARRAY_TASK_ID.out logs_100M_0.4_0.15_100/
 mv errors_1M100J_0.4_0.15_$SLURM_ARRAY_TASK_ID.err logs_100M_0.4_0.15_100/
+
+cd OUTPUT/Histograms_Output/100000000_0.4_0.15_100
+hadd -f 100M_0.4_0.15_JetsInvariantMass.root *JetsInvariantMass.root
+hadd -f 100M_0.4_0.15_MatchesJets.root *Jets.root
+hadd -f 100M_0.4_0.15_JetsQuarksPt.root *JetsQuarksPt.root
 
 echo -e "\n## Job finalizado em $(date +'%d-%m-%Y as %T') ###################"
            

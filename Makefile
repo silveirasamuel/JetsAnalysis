@@ -59,7 +59,10 @@ $(PREFIX_LIB)/libpythia8.a :
                 in the top PYTHIA directory)
 
 # Examples without external dependencies.
-main% : main%.cc $(PREFIX_LIB)/libpythia8.a
+main%: main%.cc  $(PREFIX_LIB)/libpythia8.a
+	$(CXX) $< -o $@ $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
+
+CSAnalysis_Quarks: $$@.cc  $(PREFIX_LIB)/libpythia8.a
 	$(CXX) $< -o $@ $(CXX_COMMON) $(GZIP_INC) $(GZIP_FLAGS)
 
 # MixMax.
@@ -108,7 +111,7 @@ else
 endif
 
 # FASTJET3.
-main71 main72 main75 CSAnalysis: $$@.cc $(PREFIX_LIB)/libpythia8.a
+main71 main72 main75 CSAnalysis CSAnalysis_WN : $$@.cc $(PREFIX_LIB)/libpythia8.a
 ifeq ($(FASTJET3_USE),true)
 	$(CXX) $< -o $@ -I$(FASTJET3_INCLUDE) $(CXX_COMMON)\
 	 -L$(FASTJET3_LIB) -Wl,-rpath,$(FASTJET3_LIB) -lfastjet\

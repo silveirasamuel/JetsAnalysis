@@ -1,18 +1,21 @@
 # PYTHIA configuration file.
-# Generated on Sex Jul 17 17:28:19 -03 2020 with the user supplied options:
-# --with-fastjet3=/home/samuel.silveira/Fastjet/fastjet-install/
+# Generated on qua mar 18 16:38:20 -03 2020 with the user supplied options:
+# --enable-debug
 # --enable-shared
+# --enable-64bit
+# --with-root=/home/sspsilveira/ROOT/root-build
+# --with-fastjet3=/home/sspsilveira/Fastjet/fastjet-3.3.3
 
 # Install directory prefixes.
-PREFIX_BIN=/home/samuel.silveira/pythia8244/bin
-PREFIX_INCLUDE=/home/samuel.silveira/pythia8244/include
-PREFIX_LIB=/home/samuel.silveira/pythia8244/lib
-PREFIX_SHARE=/home/samuel.silveira/pythia8244/share/Pythia8
+PREFIX_BIN=/home/sspsilveira/pythia8244/bin
+PREFIX_INCLUDE=/home/sspsilveira/pythia8244/include
+PREFIX_LIB=/home/sspsilveira/pythia8244/lib
+PREFIX_SHARE=/home/sspsilveira/pythia8244/share/Pythia8
 
 # Compilation flags (see ./configure --help for further documentation).
 ENABLE_SHARED=true
 CXX=g++
-CXX_COMMON=-O2  -pedantic -W -Wall -Wshadow -fPIC
+CXX_COMMON=-g -m64  -pedantic -W -Wall -Wshadow -fPIC
 CXX_SHARED=-shared
 CXX_SONAME=-Wl,-soname,
 LIB_SUFFIX=.so
@@ -25,9 +28,9 @@ EVTGEN_LIB=
 
 # FASTJET3 configuration.
 FASTJET3_USE=true
-FASTJET3_BIN=/home/samuel.silveira/Fastjet/fastjet-install//bin
-FASTJET3_INCLUDE=/home/samuel.silveira/Fastjet/fastjet-install//include
-FASTJET3_LIB=/home/samuel.silveira/Fastjet/fastjet-install//lib
+FASTJET3_BIN=/home/sspsilveira/Fastjet/fastjet-3.3.3/bin
+FASTJET3_INCLUDE=/home/sspsilveira/Fastjet/fastjet-3.3.3/include
+FASTJET3_LIB=/home/sspsilveira/Fastjet/fastjet-3.3.3/lib
 
 # HEPMC2 configuration.
 HEPMC2_USE=false
@@ -66,10 +69,10 @@ PROMC_INCLUDE=
 PROMC_LIB=
 
 # ROOT configuration.
-ROOT_USE=false
-ROOT_BIN=
-ROOT_LIBS=
-CXX_ROOT=
+ROOT_USE=true
+ROOT_BIN=/home/sspsilveira/ROOT/root-build/bin/
+ROOT_LIBS=-L/home/sspsilveira/ROOT/root-build/lib -lGui -lCore -lImt -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lROOTVecOps -lTree -lTreePlayer -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lMultiProc -lROOTDataFrame -pthread -lm -ldl -rdynamic
+CXX_ROOT=-g -m64  -W -Wall -Wshadow -fPIC -pthread -std=c++11 -m64 -I/home/sspsilveira/ROOT/root-build/include
 
 # GZIP configuration.
 GZIP_USE=false
