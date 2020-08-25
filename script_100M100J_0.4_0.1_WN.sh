@@ -18,7 +18,7 @@ echo -e "\n## Job iniciado em $(date +'%d-%m-%Y as %T') ###################"
 cd $SLURM_SUBMIT_DIR
 echo -e "\n## Diretorio de submissao do job: $SLURM_SUBMIT_DIR \n"
 
-srun ./CSAnalysis_WN ggscbar 1000000 0.4 0.1 $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_MAX
+#srun ./CSAnalysis_WN ggscbar 1000000 0.4 0.1 $SLURM_ARRAY_TASK_ID $SLURM_ARRAY_TASK_MAX
 
 cd OUTPUT_WN/Histograms_Output/
 mkdir -p 100000000_0.4_0.1_100
@@ -35,10 +35,7 @@ mv output_WN_1M100J_0.4_0.1_$SLURM_ARRAY_TASK_ID.out logs_WN_100M_0.4_0.1_100/
 mv errors_WN_1M100J_0.4_0.1_$SLURM_ARRAY_TASK_ID.err logs_WN_100M_0.4_0.1_100/
 
 cd OUTPUT_WN/Histograms_Output/100000000_0.4_0.1_100
-hadd -f 100M_0.4_0.1_JetsInvariantMass.root *JetsInvariantMass.root
-hadd -f 100M_0.4_0.1_MatchesJets.root *Jets.root
-hadd -f 100M_0.4_0.1_JetsQuarksPt.root *JetsQuarksPt.root
-hadd -f 100M_0.4_0.1_JetsNeutrinos.root *hresultsNeutrinos.root
+
 
 echo -e "\n## Job finalizado em $(date +'%d-%m-%Y as %T') ###################"
            
