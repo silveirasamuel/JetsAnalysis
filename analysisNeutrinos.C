@@ -30,8 +30,8 @@ void analysisNeutrinos(int n, double r, double m, int in, int jobs){
     stringstream ss;
 
     TFile fout(("OUTPUT_WN/Histograms_Output/"+folder+header+"_hresultsNeutrinos.root").c_str(),"recreate");
-    TH1F *hNeutrinosE = new TH1F("ne","Jet Neutrinos' Energy;e_{#nu} [GeV]; counts",200,1,1);
-    TH1F *hNeutrinospT = new TH1F("npt","Jet Neutrinos' p_{T}; p_{T}^{#nu} [GeV/c];counts",200,1,1);
+    TH1F *hNeutrinosE = new TH1F("ne","Jet Neutrinos' Energy;e_{#nu} [GeV]; counts",200,1,200);
+    TH1F *hNeutrinospT = new TH1F("npt","Jet Neutrinos' p_{T}; p_{T}^{#nu} [GeV/c];counts",200,1,200);
     int count = 0;
     if (neutrinos.is_open()){
         cout<<"Loading neutrinos ..."<<endl;
